@@ -37,11 +37,22 @@ function onEachAirport(feature, layer) {
   layer.on('mouseout', showAll);
 }
 
-function airportToCircle(feature, latlng) {
+function airportToCircleMarker(feature, latlng) {
   return L.circleMarker(latlng, {
     radius: 4,
     color: 'white',
     fillOpacity: 1,
+    pane: 'circles',
+    bubblingMouseEvents: false
+  });
+}
+
+function airportToCircle(feature, latlng) {
+  return L.circle(latlng, {
+    radius: 10000,
+    color: 'green',
+    opacity: 0,
+    fillOpacity: 0,
     pane: 'circles',
     bubblingMouseEvents: false
   });
@@ -67,7 +78,8 @@ function onEachClearLine(feature, layer) {
 }
 
 
-var airportLayer = L.geoJSON(airports, { onEachFeature: onEachAirport, pointToLayer: airportToCircle }).addTo(map);
+var airportLayer = L.geoJSON(airports, { onEachFeature: onEachAirport, pointToLayer: airportToCircleMarker}).addTo(map);
+var clearAirportLayer = L.geoJSON(airports, { onEachFeature: onEachAirport, pointToLayer: airportToCircle}).addTo(map);
 var codeLayer = L.geoJSON(airports, { pointToLayer: airportToMarker }).addTo(map);
 var lineLayer = L.geoJSON(routes, { style: styleLine }).addTo(map);
 var clearLineLayer = L.geoJSON(routes, { style: styleClearLine, onEachFeature: onEachClearLine }).addTo(map);
