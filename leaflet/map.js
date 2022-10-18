@@ -52,7 +52,6 @@ function filterId(id) {
       style: feature => feature.properties.style,
       filter: (feature, layer) => feature.id.includes(id)
     }).addTo(map);
-    console.log(connections);
   }
 };
 
