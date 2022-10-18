@@ -105,13 +105,14 @@
     }
   </script>
 
-  <script src="data/american.js" type="text/javascript"></script>
+
+  <script src="data/united.js" type="text/javascript"></script>
+
   <script>
     var airportLayer = L.geoJSON(airports, { onEachFeature: onEachAirport, pointToLayer: airportToCircle }).addTo(map);
     var codeLayer = L.geoJSON(airports, { pointToLayer: airportToMarker }).addTo(map);
     var lineLayer = L.geoJSON(routes, { style: styleLine }).addTo(map);
     var clearLineLayer = L.geoJSON(routes, { style: styleClearLine, onEachFeature: onEachClearLine }).addTo(map);
-
     let halfRoutes = JSON.parse(JSON.stringify(routes));
     halfRoutes.features.forEach(x => x.geometry.coordinates = x.geometry.coordinates.slice(0, 3));
     var halfLineLayer = L.geoJSON(halfRoutes, { style: styleLine }).addTo(map);
