@@ -1,3 +1,15 @@
+var path = location.pathname.split('/');
+if (path[path.length - 1] === 'index.html') {
+  var maptype = path[path.length - 2];
+} else {
+  var maptype = path[path.length - 1];
+}
+
+const prom1 = fetch(`../${maptype}/airports.json`).then(res => res.json());//.then(response => airports = response.json());
+const prom2 = fetch(`../${maptype}/routes.json`).then(res => res.json());//.then(response => routes = response.json());
+var [airports, routes] = await Promise.all([prom1, prom2])
+
+
 var map = L.map('map',).setView([37.8, -96], 5);
 map.createPane("airports");
 map.getPane("airports").style.zIndex = 998;
@@ -19,7 +31,7 @@ function getConnections(id) {
   var connections = new Set();
   connections.add(id)
   routes.features.forEach(x => {
-    label = x.id.split('_');
+    var label = x.id.split('_');
     if (label[0] == id) {
       connections.add(label[1])
     }
@@ -124,3 +136,4 @@ var clearLineLayer = L.geoJSON(routes, { style: styleClearLine, onEachFeature: o
 let halfRoutes = JSON.parse(JSON.stringify(routes));
 halfRoutes.features.forEach(x => x.geometry.coordinates = x.geometry.coordinates.slice(0, 3));
 var halfLineLayer = L.geoJSON(halfRoutes, { style: styleLine }).addTo(map);
+
