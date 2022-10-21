@@ -1,16 +1,20 @@
 body {
-    padding: 0;
-    margin: 0;
-  }
+  padding: 0;
+  margin: 0;
+}
 
-  html,
-  body,
-  #map {
-    height: 100%;
-    width: 100%;
-  }
+html,
+body,
+#map {
+  height: 100%;
+  width: 100%;
+}
 
-  .codes {
-    font-weight: bold;
-    color: white;
-  }
+.codes {
+  font-weight: bold;
+  color: white;
+}
+
+.leaflet-control-layers-expanded {
+  font-size: 150%;
+}
