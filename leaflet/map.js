@@ -141,7 +141,7 @@ export async function getMap(map, maptype) {
   var halfLineLayer = L.geoJSON(halfRoutes, { style: styleLine });//.addTo(map);
 
   var layerGroup = L.layerGroup([
-    filterRouteLayer, filterAirportLayer, filterLabelLayer,
+    // filterRouteLayer, filterAirportLayer, filterLabelLayer,
     airportLayer, clearAirportLayer, labelLayer, lineLayer,
     clearLineLayer, halfLineLayer]);
 
