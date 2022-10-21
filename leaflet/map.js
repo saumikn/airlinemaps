@@ -137,3 +137,13 @@ let halfRoutes = JSON.parse(JSON.stringify(routes));
 halfRoutes.features.forEach(x => x.geometry.coordinates = x.geometry.coordinates.slice(0, 3));
 var halfLineLayer = L.geoJSON(halfRoutes, { style: styleLine }).addTo(map);
 
+var layerGroup = L.layerGroup([
+  filterRouteLayer, filterAirportLayer, filterLabelLayer,
+  airportLayer, clearAirportLayer, labelLayer, lineLayer,
+  clearLineLayer, halfLineLayer]);
+
+var baseLayers = {
+  "Test": layerGroup,
+};
+
+L.control.layers(baseLayers, null, {'collapsed':false}).addTo(map);
