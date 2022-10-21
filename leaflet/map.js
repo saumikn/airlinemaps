@@ -5,7 +5,7 @@ if (path[path.length - 1] === 'index.html') {
   var maptype = path[path.length - 1];
 }
 
-export default async function getMap(map, maptype) {
+export async function getMap(map, maptype) {
 
 
   const prom1 = fetch(`./data/${maptype}/airports.json`).then(res => res.json());//.then(response => airports = response.json());

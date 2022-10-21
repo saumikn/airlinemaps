@@ -15,9 +15,10 @@
   <!-- <script src="../leaflet/map.js" type="module"></script> -->
 
   <script type="module">
+    import {getMap} from "./leaflet/map.js"
 
 
-    export var map = L.map('map',).setView([37.8, -96], 5);
+    var map = L.map('map',).setView([37.8, -96], 5);
     map.createPane("airports");
     map.getPane("airports").style.zIndex = 998;
     map.createPane("circles");
@@ -30,7 +31,6 @@
     }).addTo(map);
 
 
-    import getMap from "./leaflet/map.js"
 
     var all = await getMap(map, 'all');
     var american = await getMap(map, 'american');
