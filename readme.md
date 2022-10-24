@@ -5,7 +5,7 @@ A tool for interactively visualizing airline maps, color-coded by either Airline
 Created by Saumik Narayanan.
 ## Description
 
-Most airline route maps which exist online are very difficult to understand and parse, because all of the lines on the map are the same color and its nearly impossible to tell where the lines are coming from and going.
+Most official airline route maps are very difficult to understand and parse, because all of the lines on the map are the same color and it's nearly impossible to tell where the lines are coming from and going (e.g. [1](https://news.delta.com/sites/default/files/styles/twitter_share_1200/public/US_10_15-01_0.png?itok=kmb_mPtD), [2](https://images.airlineroutemaps.com/maps/United_Airlines.gif)).
 
 This repository allows you to visualize the routes of a given airline more clearly, by color-coding the flight paths based on the base hub of the flight. For instance, in the image of Delta Airline's domestic routes, all the routes that start in Atlanta are shown in red, all Minneapolis routes are pink, all Seattle routes are dark blue, etc. Note that I've hidden routes which go between two hubs, and routes which don't connect with a hub are shown in gray.
 
@@ -27,42 +27,55 @@ I could have also used a dedicated flight API like [Cirrum](https://www.cirium.c
 
 To run all the code, use the conda environment defined in [requirements.yml](https://github.com/saumikn/airlinemaps/blob/master/requirements.yml).
 
-The initial data processing is located in [data/data_analysis.ipynb](https://github.com/saumikn/airlinemaps/blob/master/data/data_analysis.ipynb). Essentially, I merged the data in [routes.dat](https://github.com/saumikn/airlinemaps/blob/master/data/routes.dat) and [airport-codes.csv](https://github.com/saumikn/airlinemaps/blob/master/data/airport-codes.csv), and filtered based on the specified airline. I then created a new column for color, based on which hub the route flies out of, or which airline operates the route. An example of this can be found in [data/delta/routes.csv](https://github.com/saumikn/airlinemaps/blob/master/data/delta/routes.csv).
+The initial data processing is located in [data/data_analysis.ipynb](https://github.com/saumikn/airlinemaps/blob/master/data/data_analysis.ipynb). Essentially, I merged the data in [routes.dat](https://github.com/saumikn/airlinemaps/blob/master/data/routes.dat) and [airport-codes.csv](https://github.com/saumikn/airlinemaps/blob/master/data/airport-codes.csv), and filtered based on a specified airline. I then created a new column for color, based on which hub the route flies out of or which airline operates the route. An example of this output can be found in [data/delta/routes.csv](https://github.com/saumikn/airlinemaps/blob/master/data/delta/routes.csv).
 
-In my original attempt, I used Python to directly convert this code into an ipyleaflet widget. However, I switched to plain Javacript and Leaflet so I don't need to use a live Python server in order to run the interactive server. The old code is still there at to run at [python/ipyleaflet.ipynb](https://github.com/saumikn/airlinemaps/blob/master/python/ipyleaflet.ipynb) if you're interested in trying ipyleaflet.
+In my original attempt, I used Python to directly convert this code into an ipyleaflet widget. However, I switched to plain Javacript and Leaflet so I don't need to use a live Python server in order to run the interactive html maps. The old code is still there at to run at [python/ipyleaflet.ipynb](https://github.com/saumikn/airlinemaps/blob/master/python/ipyleaflet.ipynb) if you're interested in trying ipyleaflet.
 
-I created a second file for futher data processing at [leaflet/leaflet.ipynb](https://github.com/saumikn/airlinemaps/blob/master/leaflet/leaflet.ipynb). This simply takes the preprocessed and filtered route data, and turns it into two GeoJSON files - one representing the locations of the airports and another for the routes. This is necessary so that Leaflet can easily load the data, since working with GeoJSONs is easier than working with CSVs. An example of this output can be found in [data/delta/airports.json](https://github.com/saumikn/airlinemaps/blob/master/data/delta/airports.json) and [data/delta/routes.json](https://github.com/saumikn/airlinemaps/blob/master/data/delta/routes.json).
+Instead, I created a second file for futher data processing at [leaflet/leaflet.ipynb](https://github.com/saumikn/airlinemaps/blob/master/leaflet/leaflet.ipynb). This simply takes the preprocessed and filtered route data, and turns it into two GeoJSON files - one representing the locations of the airports and another for the routes. This is necessary so that Leaflet can easily load the data, since working with GeoJSONs is easier than working with CSVs. An example of this output can be found in [data/delta/airports.json](https://github.com/saumikn/airlinemaps/blob/master/data/delta/airports.json) and [data/delta/routes.json](https://github.com/saumikn/airlinemaps/blob/master/data/delta/routes.json).
 
-My code to create the interactive Leaflet maps can be found in [leaflet/map.js](https://github.com/saumikn/airlinemaps/blob/master/leaflet/map.js). This code takes the earlier json data files, and puts them onto the map. I then add functions for hover and click events, which filter the map to only show routes connecting to tha airport that the user hovers over.
+The code to create the interactive Leaflet maps can be found in [leaflet/map.js](https://github.com/saumikn/airlinemaps/blob/master/leaflet/map.js). This code takes the earlier json data files, and adds them onto the map. I then add functions for hover and click events, which filter the map to only show routes connecting to tha airport that the user hovers over.
 
 
 ## Screenshots
 
-Note that in all the images, route lines overlap. For example, both American and Delta fly nonstop between Atlanta and Dallas, but only one color can be shown since both lines take up the same space.
+Note that in all the images, route lines overlap. For example, both American and Delta fly nonstop between Atlanta and Dallas, but only one color can be shown since both lines take up the same space on the map.
+
+&nbsp;
 
 ![](screenshots/all.png)
-Mapping all domestic routes, color-coded by airline. All flights on American are in green, United flights are in blue, and Delta flights are in red.
+Domestic routes, color-coded by airline. American flights are in green, United flights are in blue, and Delta flights are in red.
+
+&nbsp;
 
 ![](screenshots/american.png)
-Mapping all domestic routes flown by American, color-coded by route hub. All flights from Chicago are in yellow, flights from Dallas are in orange, etc.
+Domestic routes flown by American, color-coded by route hub. Flights from Chicago are in yellow, flights from Dallas are in orange, etc.
+
+&nbsp;
 
 ![](screenshots/delta.png)
-Mapping all domestic routes flown by Delta, color-coded by route hub. All flights from Atlanta are in red, flights from Minneapolis are in pink, etc.
+Domestic routes flown by Delta, color-coded by route hub. Flights from Atlanta are in red, flights from Minneapolis are in pink, etc.
+
+&nbsp;
 
 ![](screenshots/united.png)
-Mapping all domestic routes flown by United, color-coded by route hub. All flights from Chicago are in red, flights from Dallas are in orange, etc.
+Domestic routes flown by United, color-coded by route hub. Flights from Chicago are in red, flights from Dallas are in orange, etc.
+
+&nbsp;
 
 ![](screenshots/all-lax.png)
-Mapping all domestic routes flown from LAX, using the same color scheme as the first screenshot. LAX is notable as the only airport which all three airlines use as a hub, so there are a significant number of lines in red, blue, and green.
+Domestic routes flown from LAX, using the same color scheme as the first screenshot. LAX is notable as the only airport which all three airlines use as a hub, so there are a significant number of lines in red, blue, and green.
 
+&nbsp;
 
 ![](screenshots/all-ord.png)
-Mapping all domestic routes flown from ORD, using the same color scheme as the first screenshot. ORD is the only other airport serving multiple airlines as a hub (American and United). This is why there are many blue and green lines, but very few red lines.
+Domestic routes flown from ORD, using the same color scheme as the first screenshot. ORD is the only other airport serving multiple airlines as a hub (American and United). This is why there are many blue and green lines, but very few red lines.
 
+&nbsp;
 
 ![](screenshots/all-mci.png)
-Mapping all domestic routes flown from MCI, using the same color scheme as the first screenshot. MCI is one of the biggest cities in America which doesn't serve as a hub for any airline.
+Domestic routes flown from MCI, using the same color scheme as the first screenshot. MCI serves one of the biggest cities in the US, but isn't a hub for any airline.
 
+&nbsp;
 
 ![](screenshots/delta-msp.png)
-Mapping all domestic routes flown from MSP by Delta. Uses the same color scheme as the base Delta map.
+Domestic routes flown from MSP by Delta. Uses the same color scheme as the base Delta map.
