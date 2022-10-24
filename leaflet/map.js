@@ -107,14 +107,17 @@ export async function getMap(map, maptype) {
     layer.on('mouseover', (ev) => layer.openTooltip(ev.latlng));
   }
 
-  var airportLayer = L.geoJSON(airports, { pointToLayer: airportToCircleMarker });//.addTo(map);
-  var clearAirportLayer = L.geoJSON(airports, { onEachFeature: onEachAirport, pointToLayer: airportToCircle });//.addTo(map);
-  var labelLayer = L.geoJSON(airports, { pointToLayer: airportToLabel });//.addTo(map);
-  var lineLayer = L.geoJSON(routes, { style: styleLine });//.addTo(map);
-  var clearLineLayer = L.geoJSON(routes, { style: styleClearLine, onEachFeature: onEachClearLine });//.addTo(map);
+  var airportLayer = L.geoJSON(airports, { pointToLayer: airportToCircleMarker });
+  var clearAirportLayer = L.geoJSON(airports, { onEachFeature: onEachAirport, pointToLayer: airportToCircle });
+  var labelLayer = L.geoJSON(airports, { pointToLayer: airportToLabel });
+  var lineLayer = L.geoJSON(routes, { style: styleLine });
+  var clearLineLayer = L.geoJSON(routes, { style: styleClearLine, onEachFeature: onEachClearLine });
+
+  // HalfRoutes is a bit of a hack, which allows the area next to a hub to be dominated by the hub routes, instead of other routes.
+  // Doesn't really change any of the website functionality, just makes the maps look a bit cleaner.
   let halfRoutes = JSON.parse(JSON.stringify(routes));
   halfRoutes.features.forEach(x => x.geometry.coordinates = x.geometry.coordinates.slice(0, 3));
-  var halfLineLayer = L.geoJSON(halfRoutes, { style: styleLine });//.addTo(map);
+  var halfLineLayer = L.geoJSON(halfRoutes, { style: styleLine });
 
   var layerGroup = L.layerGroup([
     airportLayer, clearAirportLayer, labelLayer, lineLayer,
