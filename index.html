@@ -18,7 +18,7 @@
     import { getMap } from "./leaflet/map.js"
 
 
-    var map = L.map('map',).setView([37.8, -96], 5);
+    var map = L.map('map',).setView([39, -96], 5);
     map.createPane("airports");
     map.getPane("airports").style.zIndex = 998;
     map.createPane("circles");
@@ -33,11 +33,10 @@
 
 
     var all = await getMap(map, 'all');
+    all.addTo(map);
     var american = await getMap(map, 'american');
     var delta = await getMap(map, 'delta');
     var united = await getMap(map, 'united');
-
-    all.addTo(map);
 
     var mapLayers = {
       "All": all,
@@ -48,7 +47,7 @@
 
 
 
-    var layerControl = L.control.layers(mapLayers, null, { 'collapsed': false }).addTo(map);
+    var layerControl = L.control.layers(mapLayers, null, { 'collapsed': false, 'position': 'bottomright' }).addTo(map);
 
   </script>
 </body>

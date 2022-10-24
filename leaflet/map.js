@@ -1,30 +1,7 @@
-var path = location.pathname.split('/');
-if (path[path.length - 1] === 'index.html') {
-  var maptype = path[path.length - 2];
-} else {
-  var maptype = path[path.length - 1];
-}
-
 export async function getMap(map, maptype) {
-
-
   const prom1 = fetch(`./data/${maptype}/airports.json`).then(res => res.json());//.then(response => airports = response.json());
   const prom2 = fetch(`./data/${maptype}/routes.json`).then(res => res.json());//.then(response => routes = response.json());
   var [airports, routes] = await Promise.all([prom1, prom2])
-
-
-  // var map = L.map('map',).setView([37.8, -96], 5);
-  // map.createPane("airports");
-  // map.getPane("airports").style.zIndex = 998;
-
-  // map.createPane("circles");
-  // map.getPane("circles").style.zIndex = 999;
-
-  // var tiles = L.tileLayer(
-  //   'https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png', {
-  //   maxZoom: 19,
-  //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  // }).addTo(map);
 
   var filterRouteLayer = L.layerGroup();
   var filterAirportLayer = L.layerGroup();
@@ -130,7 +107,6 @@ export async function getMap(map, maptype) {
     layer.on('mouseover', (ev) => layer.openTooltip(ev.latlng));
   }
 
-
   var airportLayer = L.geoJSON(airports, { pointToLayer: airportToCircleMarker });//.addTo(map);
   var clearAirportLayer = L.geoJSON(airports, { onEachFeature: onEachAirport, pointToLayer: airportToCircle });//.addTo(map);
   var labelLayer = L.geoJSON(airports, { pointToLayer: airportToLabel });//.addTo(map);
@@ -141,16 +117,9 @@ export async function getMap(map, maptype) {
   var halfLineLayer = L.geoJSON(halfRoutes, { style: styleLine });//.addTo(map);
 
   var layerGroup = L.layerGroup([
-    // filterRouteLayer, filterAirportLayer, filterLabelLayer,
     airportLayer, clearAirportLayer, labelLayer, lineLayer,
     clearLineLayer, halfLineLayer]);
 
   return layerGroup
-
-  // var baseLayers = {
-  //   "Test": layerGroup,
-  // };
-
-  // L.control.layers(baseLayers, null, { 'collapsed': false }).addTo(map);
 
 }
