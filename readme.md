@@ -1,6 +1,6 @@
 # Airline Maps
 
-A tool for interactively visualizing airline maps, color-coded by either Airline or Hub. Try it out at [https://saumikn.com/airlinemaps](https://saumikn.com/airlinemaps).
+A tool for interactively visualizing airline maps, color-coded by either Airline or Hub. Try it out at [https://saumikn.com/airlinemaps](https://saumikn.com/airlinemaps). Check out my [blog post](https://saumikn.com/blog/airlinemaps) for more details.
 
 Created by Saumik Narayanan.
 ## Description
