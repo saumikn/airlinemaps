@@ -3,6 +3,7 @@
 A tool for interactively visualizing airline maps, color-coded by either Airline or Hub. Try it out at [https://saumikn.com/airlinemaps](https://saumikn.com/airlinemaps).
 
 Created by Saumik Narayanan.
+
 ## Description
 
 Most official airline route maps are very difficult to understand and parse, because all of the lines on the map are the same color and it's nearly impossible to tell where the lines are coming from and going (e.g. [1](https://news.delta.com/sites/default/files/styles/twitter_share_1200/public/US_10_15-01_0.png?itok=kmb_mPtD), [2](https://images.airlineroutemaps.com/maps/United_Airlines.gif)).
@@ -17,7 +18,7 @@ It should be noted that this code can be used not just for Domestic American/Del
 
 ## Data Source
 
-The data for these maps comes from [Airline Route Mapper](http://arm.64hosts.com/), a free tool for mapping airline routes. This data is unfortunately a few months out of date, but I couldn't find anything better that was free. 
+The data for these maps comes from [Airline Route Mapper](http://arm.64hosts.com/), a free tool for mapping airline routes. This data is unfortunately a few months out of date, but I couldn't find anything better that was free.
 
 I could have used the [BTS Airline Dataset](https://www.bts.gov/topics/airlines-airports-and-aviation), which has more up to date flights, as well as historical data going back decades. However, this dataset considers regional airlines such as [SkyWest](https://en.wikipedia.org/wiki/SkyWest_Airlines) seperately, so we would miss many routes. This is the problem that the related project by [kburchfiel](https://github.com/kburchfiel/route_maps_builder) faced, for instance.
 
@@ -35,10 +36,9 @@ Instead, I created a second file for futher data processing at [leaflet/leaflet.
 
 The code to create the interactive Leaflet maps can be found in [leaflet/map.js](https://github.com/saumikn/airlinemaps/blob/master/leaflet/map.js). This code takes the earlier json data files, and adds them onto the map. I then add functions for hover and click events, which filter the map to only show routes connecting to tha airport that the user hovers over.
 
-
 ## Screenshots
 
-Note that in all the images, route lines overlap. For example, both American and Delta fly nonstop between Atlanta and Dallas, but only one color can be shown since both lines take up the same space on the map.
+Note that in all the images, route lines overlap. For example, both American and Delta fly nonstop between Atlanta and Dallas, but only one color can be shown since both lines take up the same space on the map. Also, I decided to remove JFK as one of American's hubs because adding a 10th color to the map would make things much more confusing, and JFK only connects to 31 other non-hub domestic cities, significantly fewer than any other hub for any airline.
 
 &nbsp;
 
@@ -68,7 +68,7 @@ Domestic routes flown from LAX, using the same color scheme as the first screens
 &nbsp;
 
 ![](screenshots/all-ord.png)
-Domestic routes flown from ORD, using the same color scheme as the first screenshot. ORD is the only other airport serving multiple airlines as a hub (American and United). This is why there are many blue and green lines, but very few red lines.
+Domestic routes flown from ORD, using the same color scheme as the first screenshot. ORD another airport serving multiple airlines as a hub (American and United). This is why there are many blue and green lines, but very few red lines.
 
 &nbsp;
 
